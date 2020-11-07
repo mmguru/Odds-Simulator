@@ -1,5 +1,6 @@
 public class Account {
     static int defaultAcctNumber = 1;
+    static int tradeCount = 0;
     String name;
     double balance;
     int accountNumber;
@@ -24,6 +25,10 @@ public class Account {
         this.name = name;
         this.balance= balance;
         this.accountNumber = accountNumber;
+    }
+
+    public void addToBalance(double ammount) {
+        balance += ammount;
     }
 
     public static int getDefaultAcctNumber() {
