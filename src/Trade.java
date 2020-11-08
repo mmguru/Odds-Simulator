@@ -24,6 +24,7 @@ public class Trade {
         double tradeAmmount = numContracts * instrument.getPricePerTick();
         if (isWinner()) {
             pNl = takeProfitTicks * tradeAmmount;
+            account.addToBalance(pNl);
             System.out.println("Winner: " + pNl);
         } else {
             pNl = stopLossTicks * tradeAmmount;
@@ -39,5 +40,4 @@ public class Trade {
 
         return randomNumber <= odds;
     }
-
 }
