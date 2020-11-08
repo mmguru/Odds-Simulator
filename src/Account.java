@@ -4,6 +4,7 @@ public class Account {
     String name;
     double balance;
     int accountNumber;
+    int numberTrades = 0;
 
     public Account() {
         this("Acct " + defaultAcctNumber, 100000, defaultAcctNumber++);
@@ -65,5 +66,13 @@ public class Account {
 
     public boolean isPropAccount() {
         return this instanceof PropAccount;
+    }
+
+    public void printAccountInfo() {
+        System.out.println("Account Balance: $ " + balance);
+    }
+
+    public void incrementTrade() {
+        numberTrades++;
     }
 }

@@ -1,44 +1,43 @@
-import java.util.Random;
-
-public class Trade {
-    Account account;
+public class PropTrade extends Trade {
+    Day day;
+    PropAccount account;
     Instrument instrument;
     int odds;
     int numContracts;
     int stopLossTicks;
     int takeProfitTicks;
-    double pNl;
 
-    public Trade() {
-        
-    }
-
-    public Trade(Account account, Instrument instrument, int odds, int numContracts, int stopLossTicks, int takeProfitTicks) {
+    public PropTrade(Day day, PropAccount account, Instrument instrument, int odds, int numContracts, int stopLossTicks, int takeProfitTicks) {
+        this.day = day;
         this.account = account;
         this.instrument = instrument;
-        this.odds = odds;
+        super.odds = odds;
         this.numContracts = numContracts;
         this.stopLossTicks = stopLossTicks;
-
-        if (takeProfitTicks < 0) takeProfitTicks *= -1;
         this.takeProfitTicks = takeProfitTicks;
     }
 
+    @Override
     public void makeTrade() {
         double tradeAmmount = numContracts * instrument.getPricePerTick();
+//        if (account.ammountBeforeLiquidation() - tradeAmmount < 0) {
+//            System.out.println("Cannot place order");
+//            return;
+//        }
         if (isWinner()) {
             pNl = takeProfitTicks * tradeAmmount;
             System.out.println("Winner: " + pNl);
+            day.incrementWinCount();
         } else {
             pNl = stopLossTicks * tradeAmmount;
             System.out.println("Loser: " + pNl);
+            day.incrementLossCount();
         }
+
         account.addToBalance(pNl);
+        account.incrementTrade();
+        account.checkHighest();
+        day.addToProfit(pNl);
     }
 
-    public boolean isWinner() {
-        Random rand = new Random();
-        int randomNumber = rand.nextInt(100);
-        return randomNumber <= odds;
-    }
 }

@@ -1,13 +1,14 @@
 public class  Instrument {
-    int pricePerTick;
+    double pricePerTick;
+    double commission;
     String symbol;
 
-    public Instrument (String symbol, int pricePerTick) {
+    public Instrument (String symbol, double pricePerTick) {
         this.symbol = symbol;
         this.pricePerTick = pricePerTick;
     }
 
-    public int getPricePerTick() {
+    public double getPricePerTick() {
         return pricePerTick;
     }
 
